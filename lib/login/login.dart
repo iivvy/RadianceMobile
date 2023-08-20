@@ -11,65 +11,113 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:Colors.grey.shade300,
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: const SingleChildScrollView(
+          child:  SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.only(top: 100, left: 20.0, right: 20.0),
+              padding: const EdgeInsets.only(top: 100, left: 20.0, right: 20.0),
               child: Column(
-                children: [
-                  // Image.asset("",height: 100,),
-                  // Card(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(5),
-                  //   ),
-                  //   child:
+                children: <Widget>[
+                  const Padding(padding: EdgeInsets.all(20.0),
+                    child: Text('Welcome to Radiance.AI 👋',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 45.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+
+
                   SizedBox(
                     height: 350,
                     child: Column(
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
-                            obscureText: true,
+
                             cursorColor: Colors.black,
                             decoration: InputDecoration(
+                                contentPadding:
+                                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                                  // borderRadius: BorderRadius.circular(100)
+                                  borderSide:
+                                  BorderSide(color: Colors.black54, width: 1.0),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
+                                  borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                 ),
-                                border: OutlineInputBorder(
-                                    // borderRadius: BorderRadius.circular(100)
-                                    ),
                                 hintText: 'Example@gmail.com'),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
+                        const Text('Password',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
                           child: TextField(
+
                             obscureText: true,
                             cursorColor: Colors.blueGrey,
                             decoration: InputDecoration(
+                                contentPadding:
+                                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                                  // borderRadius: BorderRadius.circular(100)
+                                  borderSide:
+                                  BorderSide(color: Colors.black54, width: 1.0),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
+                                  borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                 ),
-                                border: OutlineInputBorder(
-                                    // borderRadius: BorderRadius.circular(100)
-                                    ),
-                                hintText: '************'),
+                                hintText: '*************'),
                           ),
-                        )
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Material(
+                            color: Colors.black,
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                            elevation: 5.0,
+                            child: MaterialButton(
+
+                              minWidth: 200.0,
+                              height: 42.0,
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/');},
+
+
+                              child: const Text(
+                                'Log In',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                ),
+
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
