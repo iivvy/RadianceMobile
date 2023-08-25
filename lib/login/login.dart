@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tesy/commons/Welcome.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.grey.shade200,
       body: SafeArea(
         child: Form(
           key: formKey,
@@ -151,7 +152,7 @@ class _LoginState extends State<Login> {
                           height: 20.0,
                         ),
                         Padding(
-                          padding:const  EdgeInsets.only(top: 1.0, bottom: 5.0),
+                          padding: const EdgeInsets.only(top: 1.0, bottom: 5.0),
                           child: Material(
                             color: const Color(0xff0f172a),
                             borderRadius:
@@ -161,7 +162,11 @@ class _LoginState extends State<Login> {
                                 minWidth: 240.0,
                                 height: 60.0,
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const Welcome(defaultIndex: 0,)),
+                                  );
+                                  // Navigator.pushNamed(context, '/');
                                 },
                                 child: const Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -222,14 +227,6 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  //  Expanded(
-                  //
-                  //   child: Align(
-                  //
-                  //     alignment: FractionalOffset.center,
-                  //     child:
-                  //   ),
-                  // ),
                 ],
               ),
             ),
