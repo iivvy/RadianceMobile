@@ -11,7 +11,7 @@ class SettingInitial extends SettingState{}
 class SettingLoadingState extends SettingState{}
 class SettingsLoaded extends SettingState{
   const SettingsLoaded({required this.settings});
-  final SavedAppSetting settings;
+  final SavedAppSettings settings;
   @override
   List<Object> get props => [settings];
 }

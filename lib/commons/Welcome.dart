@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:radianceAI/Patients/Patients.dart';
-import 'package:radianceAI/commons/Home.dart';
-import 'package:radianceAI/profile/profile.dart';
+import 'package:RadianceAI/Patients/Patients.dart';
+import 'package:RadianceAI/commons/Home.dart';
+import 'package:RadianceAI/profile/profile.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key, required this.defaultIndex}) : super(key: key);

@@ -1,25 +1,31 @@
+import 'package:RadianceAI/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:radianceAI/login/auth_repo.dart';
-import 'package:radianceAI/login/login.dart';
+import 'package:RadianceAI/login/auth_repo.dart';
 
+import 'Setting/bloc/setting_bloc.dart';
+import 'Setting/setting_repo.dart';
 import 'Setting/theme.dart';
 import 'commons/Welcome.dart';
+import 'login/auth_repo.dart';
 import 'login/bloc/auth_bloc.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+void main() async {
+  var delegate = await LocalizationDelegate.create(
+      fallbackLocale: 'en_US', supportedLocales: ['en_US', 'fr']);
 
-
-void main() {
-  runApp(const MaterialApp(home: Login()),);
+  runApp(LocalizedApp(delegate, MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
+
   AuthenticationService authenticationService = AuthenticationService();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -27,12 +33,17 @@ class MyApp extends StatelessWidget {
           AuthenticationBloc(authenticationService: authenticationService)
             ..add(GetSession()),
         ),
+        BlocProvider(
+            create: (_) => SettingBloc(settingService: SettingService())
+              ..add(GetSavedSettings())),
       ], child: _buildWithTheme(context),
 
 
     );
   }
-  Widget _buildWithTheme(BuildContext context ){
+
+  Widget _buildWithTheme(BuildContext context) {
+    var localizationDelegate = LocalizedApp.of(context).delegate;
     return BlocBuilder<SettingBloc, SettingState>(builder: (context, state) {
       AppTheme _theme = AppTheme.light;
       String _language = 'fr';
@@ -40,28 +51,29 @@ class MyApp extends StatelessWidget {
         _theme =
         state.settings.theme == 'dark' ? AppTheme.dark : AppTheme.light;
         _language = state.settings.language;
-
+      }
+      return LocalizationProvider(
+          state: LocalizationProvider.of(context).state,
+      child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      localizationDelegate,
+      GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: localizationDelegate.supportedLocales,
+      locale: Locale.fromSubtags(languageCode: _language),
+      title: 'RadianceAI',
+      theme: appThemeData[_theme],
+      initialRoute: "login",
+      routes: {
+        'login' :(context) =>const Login(),
+      "/": (context) => const Welcome(
+      defaultIndex: 0,
+      ),
+      }));
+    },
+    );
   }
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        locale: Locale.fromSubtags(languageCode: _language),
-        title: 'RadianceAI',
-        theme: appThemeData[_theme],
-        initialRoute: "/",
-        routes: {
-          '/' :(context) => const Welcome(defaultIndex: 0,),
-      });
-        },
-      );
 }
-
-
-// theme: ThemeData.dark().copyWith(
-// textTheme: const TextTheme(
-// bodyText1: TextStyle(color: Colors.black54),
-// ),
-// ),
-// initialRoute:'/' ,
-// routes: {
-// '/':(context) =>const Welcome(defaultIndex: 0,),
-// 'login':(context)=> const Login(),
