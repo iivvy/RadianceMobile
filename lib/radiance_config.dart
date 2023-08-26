@@ -5,6 +5,7 @@ class RadianceAI{
   static const prediction = '$baseUrl/doctor/predict';
   static const report = '$baseUrl/doctor/report';
   static const profile ='$baseUrl/auth/test-token';
+  static const profilePhoto = '$baseUrl/doctor/update_profile_picture';
   static const getPatients = '$baseUrl/doctor/patients/names';
 
 

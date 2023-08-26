@@ -34,6 +34,12 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),color: Colors.blue.shade900, onPressed: (
+
+            ) {   Navigator.pop(context); },),
+       ),
       body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
       backgroundColor: Colors.red,
       bottomNavigationBar:BottomNavigationBar(
