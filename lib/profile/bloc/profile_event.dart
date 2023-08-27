@@ -1,6 +1,5 @@
 part of 'profile_bloc.dart';
 
-import 'package:image_picker/image_picker.dart';
 
 abstract class ProfileEvent extends Equatable {
   const ProfileEvent();
@@ -16,7 +15,7 @@ class PatchProfileEvent extends ProfileEvent {
   final Map value;
 }
 
-class PostPartnerAvatarEvent extends ProfileEvent {
-  const PostPartnerAvatarEvent({required this.avatar});
+class PostUserAvatarEvent extends ProfileEvent {
+  const PostUserAvatarEvent({required this.avatar});
   final XFile? avatar;
 }

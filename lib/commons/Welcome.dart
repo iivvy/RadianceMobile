@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:RadianceAI/Setting/bloc/setting_bloc.dart';
+import 'package:RadianceAI/profile/bloc/profile_bloc.dart';
+import 'package:RadianceAI/user/models/user_model.dart';
 import 'package:RadianceAI/Patients/Patients.dart';
 import 'package:RadianceAI/commons/Home.dart';
 import 'package:RadianceAI/profile/profile.dart';
@@ -11,9 +15,40 @@ class Welcome extends StatefulWidget {
   State<Welcome> createState() => _WelcomeState();
 }
 
-int _selectedIndex = 0;
-
 class _WelcomeState extends State<Welcome> {
+  late User user;
+  int _selectedIndex = 0;
+  late bool _theme;
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = const User(
+      id: 0,
+      name: '',
+      phone: '',
+      address: '',
+      email: '',
+      website: '',
+      status: '',
+      photo: '',
+      stripeId: '',
+    );
+
+    _theme = BlocProvider.of<SettingBloc>(context).theme == 'dark';
+
+    _initializeWidgetOptions();
+  }
+
+  void _initializeWidgetOptions() {
+    _widgetOptions.addAll([
+      const Home(),
+      const Patients(),
+      UserProfile(userProfile: user),
+    ]);
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -21,51 +56,40 @@ class _WelcomeState extends State<Welcome> {
         // BlocProvider.of<TraceBloc>(context).add(GetTraceHistory());
       }
       if (index == 2) {
-        // BlocProvider.of<ProfileBloc>(context).add(GetProfileEvent());
+        BlocProvider.of<ProfileBloc>(context).add(GetProfileEvent());
       }
     });
   }
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const UserProfile(),
-    const Patients(),
-    const Home(),
-  ];
+  final List<Widget> _widgetOptions = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: IconButton(icon:const Icon(Icons.arrow_back),color: Colors.blue.shade900, onPressed: (
-
-            ) {   Navigator.pop(context); },),
-       ),
+        // Add your app bar content here
+      ),
       body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
       backgroundColor: Colors.red,
-      bottomNavigationBar:BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon:
-            Icon(Icons.sick),
+            icon: Icon(Icons.sick),
             label: "Patients",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-     Icons.account_circle_rounded),
-
+            icon: Icon(Icons.account_circle_rounded),
             label: "Profile",
           ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-
-
-      );
-
+    );
   }
 }

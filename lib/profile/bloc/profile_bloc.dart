@@ -1,8 +1,8 @@
+import 'package:RadianceAI/profile/profile_repo.dart';
+import 'package:RadianceAI/user/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../profile_repo.dart';
 
 
 part 'profile_event.dart';
@@ -37,7 +37,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(const ProfileUpdateFailed(error: ""));
       }
     });
-    on<PostPartnerAvatarEvent>((event, emit) async {
+    on<PostUserAvatarEvent>((event, emit) async {
       emit(ProfileLoading());
       try {
         final response = await profileService.postProfilePhoto(event.avatar);

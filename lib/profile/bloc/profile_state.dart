@@ -13,6 +13,7 @@ class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
   const ProfileLoaded({required this.user});
+
   final User user;
   @override
   List<Object> get props => [user];

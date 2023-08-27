@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+
+import 'package:RadianceAI/user/models/user_model.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:RadianceAI/main_repo.dart';
 import 'package:RadianceAI/radiance_config.dart';
