@@ -44,7 +44,7 @@ class _UserProfileState extends State<UserProfile> {
                           Container(
                             child: AvatarWidget(
                               key: ValueKey(Random().nextInt(100)),
-                              avatar: userProfile.photo,
+                              avatar: userProfile.profile_picture,
                             ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -68,14 +68,14 @@ class _UserProfileState extends State<UserProfile> {
                                 decoration: const InputDecoration(
                                   hintText: "username",
                                 ),
-                                // onFieldSubmitted: (value) {
-                                //   if (_formKey.currentState!.validate()) {
-                                //     BlocProvider.of<ProfileBloc>(context).add(
-                                //         PatchProfileEvent(value: {
-                                //       'name': nameControler.text
-                                //     }));
-                                //   }
-                                // },
+                                onFieldSubmitted: (value) {
+                                  if (_formKey.currentState!.validate()) {
+                                    BlocProvider.of<ProfileBloc>(context).add(
+                                        PatchProfileEvent(value: {
+                                      'name': userProfile.first_name,
+                                    }));
+                                  }
+                                },
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "error.emptyText";
@@ -84,6 +84,9 @@ class _UserProfileState extends State<UserProfile> {
                                 },
                               ),
                             ),
+                            Padding( padding: const EdgeInsets.all(15.0),
+                            child: Text(userProfile.first_name),
+                            )
                     ],
                     
                   )

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -50,59 +51,60 @@ class UserListModel extends Equatable {
 
 class User {
   final int id;
-  final String name;
-  final String phone;
-  final String address;
+  final String first_name;
+  final String last_name;
   final String email;
-  final String website;
-  final String status;
-  final String photo;
-  final String stripeId;
+  final int age;
+  final String speciality;
+  final String hospital;
+  final String profile_picture;
+  final String address;
 
 
   const User(
       {required this.id,
-        required this.name,
-        required this.phone,
+        required this.first_name,
+        required this.last_name,
         required this.address,
         required this.email,
-        required this.website,
-        required this.status,
-        required this.photo,
+        required this.speciality,
+        required this.hospital,
+        required this.profile_picture,
+        required this.age,
+       });
 
-        required this.stripeId});
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'].toInt(),
-      name: map['name'] ?? "",
-      phone: map['phone'] ?? "",
+      first_name: map['first_name'] ?? "",
+      last_name: map['last_name'] ?? "",
       address: map['address'] ?? "",
       email: map['email'] ?? "",
-      website: map['website'] ?? "",
-      status: map['status'] ?? "",
-      photo: map['photo'] ?? "",
-      stripeId: map['stripeId'] ?? "",
+      hospital: map['hospital'] ?? "",
+      speciality: map['speciality'] ?? "",
+      profile_picture: map['profile_picture'] ?? "",
+      age: map['age'] ?? "",
 
     );
   }
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': name,
-      'phone': phone,
+      'first_name': first_name,
+      'last_name': last_name,
       'address': address,
       'email': email,
-      'website': website,
-      'status': status,
-      'photo': photo,
-      'stripeId': stripeId,
+      'hospital': hospital,
+      'speciality': speciality,
+      'profile_picture': profile_picture,
+      'age': age,
 
     };
   }
 
   @override
   String toString() {
-    return 'Partner(id: $id, name: $name, phone: $phone,address: $address,email : $email,website : $website,status : $status,photo : $photo,stripeId:$stripeId)';
+    return 'User(id: $id, first_name: $first_name, last_name: $last_name,address: $address,email : $email,hospital : $hospital,speciality : $speciality,profile_picture : $profile_picture,age:$age)';
   }
 
   String toJson() => json.encode(toMap());
@@ -112,26 +114,26 @@ class User {
 
   User copyWith({
     int? id,
-    String? name,
-    String? phone,
+    String? first_name,
+    String? last_name,
     String? address,
     String? email,
-    String? website,
-    String? status,
-    String? photo,
-    String? stripeId,
+    String? hospital,
+    String? speciality,
+    String? profile_picture,
+    int? age,
 
   }) {
     return User(
       id: id ?? this.id,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
+      first_name: first_name ?? this.first_name,
+      last_name: last_name ?? this.last_name,
       address: address ?? this.address,
       email: email ?? this.email,
-      website: website ?? this.website,
-      status: status ?? this.status,
-      photo: photo ?? this.photo,
-      stripeId: stripeId ?? this.stripeId,
+      hospital: hospital ?? this.hospital,
+      speciality: speciality ?? this.speciality,
+      profile_picture: profile_picture ?? this.profile_picture,
+      age: age ?? this.age,
 
     );
   }
@@ -139,15 +141,15 @@ class User {
   @override
   int get hashCode {
     return id.hashCode ^
-    name.hashCode ^
-    phone.hashCode ^
+    first_name.hashCode ^
+    last_name.hashCode ^
     address.hashCode ^
     email.hashCode ^
-    status.hashCode ^
-    photo.hashCode ^
+    hospital.hashCode ^
+    profile_picture.hashCode ^
 
-    stripeId.hashCode ^
-    website.hashCode;
+    age.hashCode ^
+    speciality.hashCode;
   }
 
   @override
@@ -156,14 +158,14 @@ class User {
 
     return other is User &&
         other.id == id &&
-        other.name == name &&
-        other.phone == phone &&
+        other.first_name == first_name &&
+        other.last_name == last_name &&
         other.email == email &&
-        other.website == website &&
-        other.status == status &&
-        other.photo == photo &&
+        other.hospital == hospital &&
+        other.speciality == speciality &&
+        other.profile_picture == profile_picture &&
 
-        other.stripeId == stripeId &&
+        other.age == age &&
         other.address == address;
   }
 }

@@ -26,14 +26,14 @@ class _WelcomeState extends State<Welcome> {
 
     user = const User(
       id: 0,
-      name: '',
-      phone: '',
+      first_name: '',
+      last_name: '',
       address: '',
       email: '',
-      website: '',
-      status: '',
-      photo: '',
-      stripeId: '',
+      hospital: '',
+      speciality: '',
+      profile_picture: '',
+      age: 0,
     );
 
     _theme = BlocProvider.of<SettingBloc>(context).theme == 'dark';

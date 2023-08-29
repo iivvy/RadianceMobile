@@ -22,6 +22,7 @@ class AuthenticationService extends MainRepository {
       "grant_type": "password"
     };
     var response = await http.post(uri, headers: getBaseHeaders, body: params);
+    print(response.body);
     if (response.body.contains('error')) {
       return false;
     } else {
