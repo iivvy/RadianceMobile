@@ -15,6 +15,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoading());
       try {
         var response = await profileService.getUserProfile();
+        print(response);
         if (response is User) {
           emit(ProfileLoaded(user: response));
         } else {

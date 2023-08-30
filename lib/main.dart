@@ -1,6 +1,8 @@
 import 'package:RadianceAI/login/login.dart';
 import 'package:RadianceAI/profile/bloc/profile_bloc.dart';
 import 'package:RadianceAI/profile/profile_repo.dart';
+import 'package:RadianceAI/user/bloc/user_bloc.dart';
+import 'package:RadianceAI/user/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:RadianceAI/login/auth_repo.dart';
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
 
   AuthenticationService authenticationService = AuthenticationService();
   ProfileService profileService = ProfileService();
+  UserService userService = UserService();
 
   // This widget is the root of your application.
   @override
@@ -39,6 +42,10 @@ class MyApp extends StatelessWidget {
            BlocProvider(
           create: (_) => ProfileBloc(profileService: profileService)
             ..add(GetProfileEvent()),
+        ),
+        BlocProvider(
+          create: (_) => UserBloc(userService: userService)
+            ..add(GetPartnersEvent()),
         ),
         BlocProvider(
             create: (_) => SettingBloc(settingService: SettingService())

@@ -7,6 +7,10 @@ class RadianceAI{
   static const profile ='$baseUrl/auth/test-token';
   static const profilePhoto = '$baseUrl/doctor/update_profile_picture';
   static const getPatients = '$baseUrl/doctor/patients/names';
+  // static const getUser = '$baseUrl/auth/test-token';
+  static String getContactsPhoto(int? userId) {
+    return "$profile$userId/photo";
+  }
 
 
 }

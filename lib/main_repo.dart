@@ -11,9 +11,12 @@ class MainRepository {
   String version = '';
   String buildNumber = '';
 
+
+
   Map<String, String> get getBaseHeaders {
     return {
       'Accept': 'application/json',
+
       // 'Accept-Encoding': 'gzip, deflate',
       "User-Agent": getUserAgent,
     };

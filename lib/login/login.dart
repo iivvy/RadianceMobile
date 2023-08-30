@@ -1,3 +1,4 @@
+import 'package:RadianceAI/user/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:RadianceAI/commons/Welcome.dart';
@@ -12,6 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  UserService userService = UserService();
   TextEditingController userNameController = TextEditingController();
   TextEditingController userPasswordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -20,15 +22,15 @@ class _LoginState extends State<Login> {
     return Scaffold(
         backgroundColor: Colors.grey.shade200,
         body: BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is Authenticated) {
+              userService.fetchUsers();
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const Welcome(defaultIndex: 0)));
-
             } else {
-              if (state is AuthenticationError){
+              if (state is AuthenticationError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                       content: Text("username or password is invalid")),
@@ -41,7 +43,8 @@ class _LoginState extends State<Login> {
               key: formKey,
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 100, left: 20.0, right: 20.0),
+                  padding:
+                      const EdgeInsets.only(top: 100, left: 20.0, right: 20.0),
 
                   // height: 521,
 
@@ -97,38 +100,39 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                             Padding(
+                            Padding(
                               padding: const EdgeInsets.only(
-                                  left: 20.0, top: 10.0, right: 20.0, bottom: 20.0),
+                                  left: 20.0,
+                                  top: 10.0,
+                                  right: 20.0,
+                                  bottom: 20.0),
                               child: TextFormField(
-                                validator: (value){
-                                  if (value!.isEmpty){
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'email';
-                                  } return null;
+                                  }
+                                  return null;
                                 },
-
                                 controller: userNameController,
-
-
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 10.0, horizontal: 20.0),
                                     border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.black54, width: 1.0),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.black, width: 2.0),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
                                     ),
                                     hintText: 'Example@gmail.com'),
                               ),
@@ -151,17 +155,20 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                             Padding(
+                            Padding(
                               padding: const EdgeInsets.only(
-                                  left: 20.0, top: 10.0, right: 20.0, bottom: 20.0),
+                                  left: 20.0,
+                                  top: 10.0,
+                                  right: 20.0,
+                                  bottom: 20.0),
                               child: TextFormField(
                                 controller: userPasswordController,
-                                validator: (value){
-                                  if (value!.isEmpty){
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'password';
-                                  } return null;
+                                  }
+                                  return null;
                                 },
-
                                 obscureText: true,
                                 cursorColor: Colors.blueGrey,
                                 decoration: const InputDecoration(
@@ -178,8 +185,8 @@ class _LoginState extends State<Login> {
                                         BorderRadius.all(Radius.circular(10.0)),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black, width: 2.0),
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 2.0),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10.0)),
                                   ),
@@ -191,27 +198,29 @@ class _LoginState extends State<Login> {
                               height: 20.0,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 1.0, bottom: 5.0),
+                              padding:
+                                  const EdgeInsets.only(top: 1.0, bottom: 5.0),
                               child: Material(
                                 color: const Color(0xff0f172a),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(13.0)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(13.0)),
                                 elevation: 2.0,
                                 child: MaterialButton(
                                     minWidth: 240.0,
                                     height: 60.0,
-                                    onPressed: () {
-                                      if (formKey.currentState!.validate()){
-                                        BlocProvider.of<AuthenticationBloc>(context)
-                                            .add(Authenticate(userName: userNameController.text, userPassword: userPasswordController.text));
-                                      }
-
-                                      //
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(builder: (context) => const Welcome(defaultIndex: 0,)),
-                                      // );
-                                      // Navigator.pushNamed(context, '/');
+                                    onPressed: () async {
+                                        if (formKey.currentState!.validate()) {
+                                          BlocProvider.of<AuthenticationBloc>(
+                                                  context)
+                                              .add(Authenticate(
+                                            userName: userNameController.text,
+                                            userPassword:
+                                                userPasswordController.text,
+                                          ));
+                                        }
+                                    
+                                
+                                      
                                     },
                                     child: const Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -278,9 +287,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-        )
-
-        );
+        ));
   }
 }
 //and

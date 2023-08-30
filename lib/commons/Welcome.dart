@@ -25,7 +25,7 @@ class _WelcomeState extends State<Welcome> {
     super.initState();
 
     user = const User(
-      id: 0,
+      // id: 0,
       first_name: '',
       last_name: '',
       address: '',
@@ -45,7 +45,7 @@ class _WelcomeState extends State<Welcome> {
     _widgetOptions.addAll([
       const Home(),
       const Patients(),
-      UserProfile(userProfile: user),
+      ProfilePage(),
     ]);
   }
 
@@ -65,6 +65,12 @@ class _WelcomeState extends State<Welcome> {
 
   @override
   Widget build(BuildContext context) {
+    return  BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        if (state is ProfileLoaded) {
+          user = state.user;
+        }
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -91,5 +97,8 @@ class _WelcomeState extends State<Welcome> {
         onTap: _onItemTapped,
       ),
     );
-  }
-}
+      }
+    );
+    }
+    }
+
