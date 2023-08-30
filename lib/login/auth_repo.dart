@@ -43,6 +43,11 @@ class AuthenticationService extends MainRepository {
       return true;
     }
   }
+  Future<void> logout() async {
+    const storage = FlutterSecureStorage();
+    await storage.delete(key: 'access_token');
+    // You can also perform additional logout-related tasks here
+  }
 
   /// function of Get Session
   Future<bool> getSession() async {

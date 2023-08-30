@@ -38,20 +38,22 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent,AuthenticationState>{
 
 
     });
-    on<LogOut>((event,emit) async{
+    // on<LogOut>((event,emit) async{
+    //   emit(AuthenticationLoading());
+    //   // Instantiate the UserService
+    //   await authenticationService.logout();
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   prefs.remove('email');
+    //   prefs.remove('password');
+    //   emit(const AuthenticationInitial(userName: null, userPassword: null));
+
+    // });
+
+   on<LogOut>((event,emit) async{
       emit(AuthenticationLoading());
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.remove('email');
-      prefs.remove('password');
-      emit(const AuthenticationInitial(userName: null, userPassword: null));
+      await authenticationService.logout();
 
-    });
+        }
+        );
 
-
-
-    }
-  }
-
-
-
-
+    }}
