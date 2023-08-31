@@ -72,12 +72,12 @@ class _WelcomeState extends State<Welcome> {
         }
     
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        // Add your app bar content here
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   // Add your app bar content here
+      // ),
       body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
-      backgroundColor: Colors.red,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
