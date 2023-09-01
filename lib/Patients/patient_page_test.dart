@@ -6,14 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Patients extends StatefulWidget {
-  const Patients({super.key});
+class PatientsPage extends StatefulWidget {
+  const PatientsPage({super.key});
 
   @override
-  State<Patients> createState() => _PatientsState();
+  State<PatientsPage> createState() => _PatientsPageState();
 }
 
-class _PatientsState extends State<Patients> {
+class _PatientsPageState extends State<PatientsPage> {
   bool isSearching = false;
   List<Patient> _filteredPatients = [];
   final myController = TextEditingController();
@@ -24,6 +24,7 @@ class _PatientsState extends State<Patients> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(

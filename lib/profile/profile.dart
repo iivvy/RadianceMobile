@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       'hospital:', '${user!.hospital}', Icons.local_hospital),
                   _userInfoCard(
                       'speciality:', user!.speciality, Icons.medical_services),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.only(top: 1.0, bottom: 5.0),
                     child: Material(

@@ -1,3 +1,7 @@
+import 'package:RadianceAI/Patients/bloc/patient_bloc.dart';
+import 'package:RadianceAI/Patients/models/patient_list_model.dart';
+import 'package:RadianceAI/Patients/patient_page_test.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:RadianceAI/Setting/bloc/setting_bloc.dart';
@@ -53,7 +57,7 @@ class _WelcomeState extends State<Welcome> {
     setState(() {
       _selectedIndex = index;
       if (index == 1) {
-        // BlocProvider.of<TraceBloc>(context).add(GetTraceHistory());
+        BlocProvider.of<PatientBloc>(context).add(GetPatientsEvent());
       }
       if (index == 2) {
         BlocProvider.of<ProfileBloc>(context).add(GetProfileEvent());
@@ -72,12 +76,12 @@ class _WelcomeState extends State<Welcome> {
         }
     
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        // Add your app bar content here
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   // Add your app bar content here
+      // ),
       body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
-      backgroundColor: Colors.red,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
