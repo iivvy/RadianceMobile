@@ -7,6 +7,7 @@ class PatientService extends MainRepository {
   Future<PatientListModel> fetchPatients() async {
     Uri uri = Uri.parse(RadianceAI.getPatients);
     var response = await http.get(uri, headers: getHeadersWithAuthorization);
+    print('this is the patient response ${response.body}');
     if (response.statusCode == 200) {
       final String rawPatientsList = response.body.toString();
       return PatientListModel.fromJson(rawPatientsList);

@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
               UserBloc(userService: userService)..add(GetPartnersEvent()),
         ),
         BlocProvider(
-            create: (_) => PatientBloc(patientService: patientService)
-              ..add(GetPatientsEvent())),
+            create: (_) =>
+             PatientBloc(patientService: patientService)..add(GetPatientsEvent())),
         BlocProvider(
             create: (_) => SettingBloc(settingService: SettingService())
               ..add(GetSavedSettings())),

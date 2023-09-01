@@ -16,6 +16,8 @@ class PatientListModel extends Equatable {
       PatientListModel.fromMap(json.decode(source));
   @override
   String toString() => 'PatientsListModel(patients: $patients)';
+
+  
   Map<String, dynamic> toMap() {
     return {
       'patients': patients.map((x) => x.toMap()).toList(),
@@ -43,7 +45,7 @@ class PatientListModel extends Equatable {
 }
 
 class Patient {
-  final int? id;
+  final String? id;
   final String first_name;
   final String last_name;
   final int age;
@@ -57,7 +59,7 @@ class Patient {
   });
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      id: map['id'] ?? 0,
+      id: map['id'] ?? "",
       first_name: map['first_name'] ?? "",
       last_name: map['last_name'] ?? "",
       age: map['age'] ?? 0,
@@ -73,7 +75,7 @@ class Patient {
   factory Patient.fromJson(String source) =>
       Patient.fromMap(json.decode(source));
   Patient copyWith({
-    int? id,
+    String? id,
     String? first_name,
     String? last_name,
     int? age,

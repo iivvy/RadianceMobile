@@ -4,6 +4,8 @@ abstract class PatientState extends Equatable {
   @override
   List<Object> get props => [];
 
+  get patients => null;
+
 }
 class PatientInitial extends PatientState {}
 class PatientLoading extends PatientState {}
