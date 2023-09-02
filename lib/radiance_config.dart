@@ -14,7 +14,7 @@ class RadianceAI{
   static String getContactsPhoto(int? userId) {
     return "$profile$userId/photo";
   }
-  static String getPatientPrediction(int? predId){
+  static String getPatientPrediction(String? predId){
     return "$baseUrl/doctor/predict/activation/$predId";
 
   }
@@ -22,6 +22,7 @@ class RadianceAI{
     return "$baseUrl/doctor/report/$predId";
 
   }
+
 
 
 }
