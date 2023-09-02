@@ -1,6 +1,7 @@
 import 'package:RadianceAI/Patients/bloc/patient_bloc.dart';
 import 'package:RadianceAI/Patients/models/patient_list_model.dart';
 import 'package:RadianceAI/Patients/patient_page_test.dart';
+import 'package:RadianceAI/prediction/predict.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,7 @@ class _WelcomeState extends State<Welcome> {
 
   void _initializeWidgetOptions() {
     _widgetOptions.addAll([
-      const Home(),
+      const PredictPage(),
       const Patients(),
       ProfilePage(),
     ]);

@@ -265,7 +265,7 @@ class _LoginState extends State<Login> {
                                 fontFamily: 'poppins'),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: 'Terms Of Use ',
+                                  text: ' Terms Of Use ',
                                   style: TextStyle(
                                       color: Color(0xff1d4ed8),
                                       fontWeight: FontWeight.w700)),
