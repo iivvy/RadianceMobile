@@ -15,7 +15,7 @@ class PredictionBloc extends Bloc<PredictionEvent,PredictionState>{
     on<MakePredictionEvent>((event,emit) async{
       emit(PredictionLoading());
       try{
-        var response = await predictService.predictImage(event.predictionData as Patient);
+        var response = await predictService.predictImage(event.predictionData );
         if(response is String){
           emit(PredictionCreated());
         }else{

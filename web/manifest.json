@@ -1,6 +1,6 @@
 {
-    "name": "tesy",
-    "short_name": "tesy",
+    "name": "RadianceAI",
+    "short_name": "RadianceAI",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

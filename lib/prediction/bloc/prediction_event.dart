@@ -11,7 +11,7 @@ abstract class PredictionEvent extends Equatable {
 class MakePredictionEvent extends PredictionEvent{
   const MakePredictionEvent({required this.predictionData});
 
-  final Prediction predictionData;
+  final Patient predictionData;
 
   @override
   List<Object> get props => [];
