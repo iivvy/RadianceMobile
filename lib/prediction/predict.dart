@@ -20,20 +20,20 @@ class PredictPage extends StatefulWidget {
 }
 
 class _PredictPageState extends State<PredictPage> {
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
-  TextEditingController _historyController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController historyController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool isImageSelected = false;
-  File? imageFile;
+  XFile? imageFile;
   _pickImagefromGallery() async {
     try {
       final pickedImage =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (pickedImage != null) {
         setState(() {
-          imageFile = File(pickedImage.path);
+          imageFile = XFile(pickedImage.path); 
           isImageSelected = true;
         });
       } else {
@@ -50,7 +50,7 @@ class _PredictPageState extends State<PredictPage> {
           await ImagePicker().pickImage(source: ImageSource.camera);
       if (pickedImage != null) {
         setState(() {
-          imageFile = File(pickedImage.path);
+          imageFile = XFile(pickedImage.path);
           isImageSelected = true;
         });
       } else {
@@ -314,7 +314,7 @@ class _PredictPageState extends State<PredictPage> {
                                 if (isImageSelected && imageFile != null)
                                   Positioned.fill(
                                       child: Image.file(
-                                    imageFile!,
+                                   File( imageFile!.path),
                                     fit: BoxFit.cover,
                                   ))
                               ]),
@@ -327,12 +327,12 @@ class _PredictPageState extends State<PredictPage> {
                                   if (formKey.currentState!.validate()) {
                                  BlocProvider.of<PredictionBloc>(context).add(MakePredictionEvent(
                                     predictionData: Patient(
-                                      firstName: _firstNameController.text,
-                                      lastName: _lastNameController.text,
-                                      age: _ageController.text,
-                                      history: _historyController.text,
-                                      image: imageFile
-                                    )
+                                      first_name: 'firstNameController.text',
+                                      last_name:' lastNameController.text',
+                                      age:22,
+                                      history: 'historyController.text',
+                           
+                                    ), imageFile: imageFile
                                   ));
                                   }
 

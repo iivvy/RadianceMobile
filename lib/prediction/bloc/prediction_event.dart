@@ -8,10 +8,12 @@ abstract class PredictionEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class MakePredictionEvent extends PredictionEvent{
-  const MakePredictionEvent({required this.predictionData});
+class MakePredictionEvent extends PredictionEvent {
+// File path or data of the image
 
-  final Patient predictionData;
+  const MakePredictionEvent({required this.predictionData, required this.imageFile});
+  final Patient predictionData; // Data to send to the API
+  final XFile? imageFile; 
 
   @override
   List<Object> get props => [];

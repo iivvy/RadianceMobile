@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -55,7 +56,8 @@ class Patient {
     required this.first_name,
     required this.last_name,
     required this.age,
-    this.history,
+    this.history, 
+
   });
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
