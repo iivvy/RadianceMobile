@@ -1,6 +1,8 @@
 import 'package:RadianceAI/Patients/bloc/patient_bloc.dart';
 import 'package:RadianceAI/Patients/patients_repo.dart';
 import 'package:RadianceAI/login/login.dart';
+import 'package:RadianceAI/prediction/bloc/prediction_bloc.dart';
+import 'package:RadianceAI/prediction/predict_repo.dart';
 import 'package:RadianceAI/profile/bloc/profile_bloc.dart';
 import 'package:RadianceAI/profile/profile_repo.dart';
 import 'package:RadianceAI/user/bloc/user_bloc.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
   ProfileService profileService = ProfileService();
   UserService userService = UserService();
   PatientService patientService = PatientService();
+  PredictService predictService = PredictService();
 
   // This widget is the root of your application.
   @override
@@ -57,6 +60,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) => SettingBloc(settingService: SettingService())
               ..add(GetSavedSettings())),
+             BlocProvider(
+          create: (_) => PredictionBloc(predictService: predictService)
+            ),
+        
       ],
       child: _buildWithTheme(context),
     );
