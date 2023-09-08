@@ -16,8 +16,13 @@ class PredictionBloc extends Bloc<PredictionEvent, PredictionState> {
       try {
         var response = await predictService.predictImage(
             event.predictionData, event.imageFile!);
-        if (response is String) {
-          emit(PredictionCreated());
+        // ignore: unnecessary_type_check
+        if (response is Map<String, dynamic>) {
+          print('PredictionBloc: Prediction response received');
+          print(response);
+        
+          emit(PredictionCreated(predictions: response));
+          print('PredictionBloc: PredictionCreated state emitted');
         } else {
           emit(PredictionCreatedFailed(error: 'error'));
         }
@@ -25,19 +30,19 @@ class PredictionBloc extends Bloc<PredictionEvent, PredictionState> {
         emit(PredictionCreatedFailed(error: e.toString()));
       }
     });
-    on<GetActivationMapEvent>((event, emit) async {
-      emit(PredictionLoading());
-      try {
-        var response =
-            await predictService.fetchActivationMap(event.predictionId);
-        if (response is String) {
-          emit(PredictionCreated());
-        } else {
-          emit(PredictionCreatedFailed(error: response!.toString()));
-        }
-      } catch (e) {
-        emit(PredictionCreatedFailed(error: e.toString()));
-      }
-    });
+    // on<GetActivationMapEvent>((event, emit) async {
+    //   emit(PredictionLoading());
+    //   try {
+    //     var response =
+    //         await predictService.fetchActivationMap(event.predictionId);
+    //     if (response is String) {
+    //       emit(PredictionCreated());
+    //     } else {
+    //       emit(PredictionCreatedFailed(error: response!.toString()));
+    //     }
+    //   } catch (e) {
+    //     emit(PredictionCreatedFailed(error: e.toString()));
+    //   }
+    // });
   }
 }

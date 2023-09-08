@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:RadianceAI/Patients/models/patient_list_model.dart';
 import 'package:RadianceAI/prediction/bloc/prediction_bloc.dart';
+import 'package:RadianceAI/prediction/predict_result_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:RadianceAI/profile/bloc/profile_bloc.dart';
@@ -33,7 +34,7 @@ class _PredictPageState extends State<PredictPage> {
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (pickedImage != null) {
         setState(() {
-          imageFile = XFile(pickedImage.path); 
+          imageFile = XFile(pickedImage.path);
           isImageSelected = true;
         });
       } else {
@@ -135,230 +136,270 @@ class _PredictPageState extends State<PredictPage> {
       if (state is ProfileLoaded) {
         user = state.user;
       }
+
       return Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: user != null
-                ? Column(
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              top: 22.0, left: 10.0, right: 10.0),
-                          child: Card(
-                            color: const Color.fromRGBO(215, 237, 255, 1),
-                            margin: const EdgeInsets.only(
-                                left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 2.0,
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: SizedBox(
-                                    height: 90.0,
-                                    width: width * 0.9,
-                                    child: ListTile(
-                                        leading: Container(
-                                          height: 70.0,
-                                          width: 70,
-                                          child: CircleAvatar(
-                                            radius: 70,
-                                            backgroundImage: NetworkImage(
-                                                'http://127.0.0.1:8000${user?.profile_picture}'),
-                                          ),
-                                        ),
-                                        title: Text(
-                                          " Hello Dr. ${user?.last_name}!",
-                                          style: GoogleFonts.poppins(
-                                            textStyle: const TextStyle(
-                                              fontSize: 27,
-                                              fontWeight: FontWeight.w700,
-                                              color:
-                                                  Color.fromARGB(255, 0, 0, 0),
-                                            ),
-                                          ),
-                                        ),
-                                        subtitle: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 2.0, left: 7.0),
-                                          child: Text(
-                                            "Hope you're doing well",
-                                            style: GoogleFonts.poppins(
-                                              textStyle: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color.fromARGB(
-                                                      255, 107, 107, 107),
-                                                  letterSpacing: .2),
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            bottom: 15.0, top: 10.0, left: 15.0),
-                        child: Text(
-                          "Please enter the patient information for a successfull prediction ✅",
-                          style: TextStyle(
-                              fontSize: 18.0, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      SingleChildScrollView(
-                        child: Column(
+          body: BlocListener<PredictionBloc, PredictionState>(
+              listener: (context, state) {
+                if (state is PredictionCreated) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PredictionResultPage(
+                            
+                                prediction:state.predictions,
+                              )));
+                }else {
+                  if(state is PredictionCreatedFailed){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("invalid form")),
+                );
+                  }
+                }
+              },
+              child: SingleChildScrollView(
+                child: Center(
+                  child: user != null
+                      ? Column(
                           children: [
-                            Form(
-                              key: formKey,
-                                child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  buildAlignInput('First Name'),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'first name';
-                                      }
-                                      return null;
-                                    },
-                                    cursorColor: Colors.black,
-                                    decoration:
-                                        buildInputDecoration('first name'),
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 22.0, left: 10.0, right: 10.0),
+                                child: Card(
+                                  color: const Color.fromRGBO(215, 237, 255, 1),
+                                  margin: const EdgeInsets.only(
+                                      left: 5.0,
+                                      right: 5.0,
+                                      top: 5.0,
+                                      bottom: 5.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  const SizedBox(height: 15.0),
-                                  buildAlignInput('Last Name'),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'last name';
-                                      }
-                                      return null;
-                                    },
-                                    cursorColor: Colors.black,
-                                    decoration:
-                                        buildInputDecoration('last name'),
+                                  elevation: 2.0,
+                                  child: Row(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: SizedBox(
+                                          height: 90.0,
+                                          width: width * 0.9,
+                                          child: ListTile(
+                                              leading: Container(
+                                                height: 70.0,
+                                                width: 70,
+                                                child: CircleAvatar(
+                                                  radius: 70,
+                                                  backgroundImage: NetworkImage(
+                                                      'http://127.0.0.1:8000${user?.profile_picture}'),
+                                                ),
+                                              ),
+                                              title: Text(
+                                                " Hello Dr. ${user?.last_name}!",
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: const TextStyle(
+                                                    fontSize: 27,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 0, 0),
+                                                  ),
+                                                ),
+                                              ),
+                                              subtitle: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 2.0, left: 7.0),
+                                                child: Text(
+                                                  "Hope you're doing well",
+                                                  style: GoogleFonts.poppins(
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Color.fromARGB(
+                                                            255, 107, 107, 107),
+                                                        letterSpacing: .2),
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 15.0),
-                                  buildAlignInput('Age'),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'age';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: buildInputDecoration('age'),
-                                  ),
-                                  const SizedBox(height: 15.0),
-                                  buildAlignInput('History'),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'history';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: buildInputDecoration('History'),
-                                  )
-                                ],
+                                )),
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: 15.0, top: 10.0, left: 15.0),
+                              child: Text(
+                                "Please enter the patient information for a successfull prediction ✅",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500),
                               ),
-                            )),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CupertinoAlertDialog(
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            child: Text("Upload from gallery"),
-                                            onPressed: () {
-                                              _pickImagefromGallery();
-                                            },
+                            ),
+                            SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Form(
+                                      key: formKey,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            buildAlignInput('First Name'),
+                                            TextFormField(
+                                              controller: firstNameController,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'first name';
+                                                }
+                                                return null;
+                                              },
+                                              cursorColor: Colors.black,
+                                              decoration: buildInputDecoration(
+                                                  'first name'),
+                                            ),
+                                            const SizedBox(height: 15.0),
+                                            buildAlignInput('Last Name'),
+                                            TextFormField(
+                                              controller: lastNameController,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'last name';
+                                                }
+                                                return null;
+                                              },
+                                              cursorColor: Colors.black,
+                                              decoration: buildInputDecoration(
+                                                  'last name'),
+                                            ),
+                                            const SizedBox(height: 15.0),
+                                            buildAlignInput('Age'),
+                                            TextFormField(
+                                              controller: ageController,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'age';
+                                                }
+                                                return null;
+                                              },
+                                              decoration:
+                                                  buildInputDecoration('age'),
+                                            ),
+                                            const SizedBox(height: 15.0),
+                                            buildAlignInput('History'),
+                                            TextFormField(
+                                              controller: historyController,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'history';
+                                                }
+                                                return null;
+                                              },
+                                              decoration: buildInputDecoration(
+                                                  'History'),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return CupertinoAlertDialog(
+                                              actions: <Widget>[
+                                                CupertinoDialogAction(
+                                                  child: Text(
+                                                      "Upload from gallery"),
+                                                  onPressed: () {
+                                                    _pickImagefromGallery();
+                                                  },
+                                                ),
+                                                CupertinoDialogAction(
+                                                  child: Text(
+                                                      "Upload From Camera"),
+                                                  onPressed: () {
+                                                    _pickImagefromCamera();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    child: Stack(children: [
+                                      Container(
+                                        width:
+                                            100, // Adjust the width and height as needed
+                                        height: 100,
+                                        color: Colors.grey[
+                                            300], // Change the color as needed
+                                        child: const Center(
+                                          child: Text(
+                                            'Drop Image',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                          CupertinoDialogAction(
-                                            child: Text("Upload From Camera"),
-                                            onPressed: () {
-                                              _pickImagefromCamera();
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              },
-                              child: Stack(children: [
-                                Container(
-                                  width:
-                                      100, // Adjust the width and height as needed
-                                  height: 100,
-                                  color: Colors
-                                      .grey[300], // Change the color as needed
-                                  child: const Center(
-                                    child: Text(
-                                      'Drop Image',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      if (isImageSelected && imageFile != null)
+                                        Positioned.fill(
+                                            child: Image.file(
+                                          File(imageFile!.path),
+                                          fit: BoxFit.cover,
+                                        ))
+                                    ]),
+                                  ),
+                                  Material(
+                                    color: Colors.blue[400],
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    child: MaterialButton(
+                                      onPressed: () async {
+                                        if (formKey.currentState!.validate()) {
+                                          BlocProvider.of<PredictionBloc>(
+                                                  context)
+                                              .add(
+                                            MakePredictionEvent(
+                                                predictionData: Patient(
+                                                  first_name:
+                                                      firstNameController.text,
+                                                  last_name:
+                                                      lastNameController.text,
+                                                  age: int.parse(
+                                                      ageController.text),
+                                                  history:
+                                                      historyController.text,
+                                                ),
+                                                imageFile: imageFile),
+                                          );
+                                    
+                                        }
+                                      },
+                                      minWidth: 200.0,
+                                      height: 42.0,
+                                      color: Colors.blue,
+                                      child: const Text(
+                                        'Predict',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ),
-                                ),
-                                if (isImageSelected && imageFile != null)
-                                  Positioned.fill(
-                                      child: Image.file(
-                                   File( imageFile!.path),
-                                    fit: BoxFit.cover,
-                                  ))
-                              ]),
-                            ),
-                            Material(
-                              color: Colors.blue[400],
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              child: MaterialButton(
-                                onPressed: () async{
-                                  if (formKey.currentState!.validate()) {
-                                 BlocProvider.of<PredictionBloc>(context).add(MakePredictionEvent(
-                                    predictionData: Patient(
-                                      first_name: 'firstNameController.text',
-                                      last_name:' lastNameController.text',
-                                      age:22,
-                                      history: 'historyController.text',
-                           
-                                    ), imageFile: imageFile
-                                  ));
-                                  }
-
-                                 
-                                },
-                                minWidth: 200.0,
-                                height: 42.0,
-                                color: Colors.blue,
-                                child: const Text(
-                                  'Predict',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                ],
                               ),
                             ),
                           ],
-                          
-                        ),
-                      ),
-                    ],
-                  )
-                : const CircularProgressIndicator(), // Show loading indicator while fetching
-          ),
-        ),
-      );
+                        )
+                      : const CircularProgressIndicator(), // Show loading indicator while fetching
+                ),
+              )));
     });
   }
 }

@@ -3,7 +3,7 @@ abstract class PredictionState extends Equatable {
   const PredictionState();
   @override
   List<Object> get props => [];
-  get predictions => null;
+
 }
 class PredictionInitial extends PredictionState {}
 class PredictionLoading extends PredictionState {}
@@ -21,8 +21,14 @@ class PredictionError extends PredictionState {
   @override
   List<Object> get props => [error];
 }
+class PredictionCreated extends PredictionState {
+  final Map<String, dynamic> predictions; // Updated to Map<String, dynamic>
 
-class PredictionCreated extends PredictionState {}
+  const PredictionCreated({required this.predictions});
+
+  @override
+  List<Object> get props => [predictions];
+}
 
 class PredictionCreatedFailed extends PredictionState {
   const PredictionCreatedFailed({required this.error});
