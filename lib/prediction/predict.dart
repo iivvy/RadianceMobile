@@ -145,259 +145,340 @@ class _PredictPageState extends State<PredictPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PredictionResultPage(
-                            
-                                prediction:state.predictions,
+                                prediction: state.predictions,
                               )));
-                }else {
-                  if(state is PredictionCreatedFailed){
+                } else {
+                  if (state is PredictionCreatedFailed) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text("invalid form")),
-                );
+                      const SnackBar(content: Text("invalid form")),
+                    );
                   }
                 }
               },
               child: SingleChildScrollView(
                 child: Center(
-                  child: user != null
-                      ? Column(
-                          children: [
-                            Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 22.0, left: 10.0, right: 10.0),
-                                child: Card(
-                                  color: const Color.fromRGBO(215, 237, 255, 1),
-                                  margin: const EdgeInsets.only(
-                                      left: 5.0,
-                                      right: 5.0,
-                                      top: 5.0,
-                                      bottom: 5.0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  elevation: 2.0,
-                                  child: Row(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: SizedBox(
-                                          height: 90.0,
-                                          width: width * 0.9,
-                                          child: ListTile(
-                                              leading: Container(
-                                                height: 70.0,
-                                                width: 70,
-                                                child: CircleAvatar(
-                                                  radius: 70,
-                                                  backgroundImage: NetworkImage(
-                                                      'http://127.0.0.1:8000${user?.profile_picture}'),
-                                                ),
-                                              ),
-                                              title: Text(
-                                                " Hello Dr. ${user?.last_name}!",
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: const TextStyle(
-                                                    fontSize: 27,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Color.fromARGB(
-                                                        255, 0, 0, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (state is PredictionLoading)
+                        CircularProgressIndicator(),
+                      user != null
+                          ? Column(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 22.0, left: 10.0, right: 10.0),
+                                    child: Card(
+                                      color: const Color.fromRGBO(
+                                          215, 237, 255, 1),
+                                      margin: const EdgeInsets.only(
+                                          left: 5.0,
+                                          right: 5.0,
+                                          top: 5.0,
+                                          bottom: 5.0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      elevation: 2.0,
+                                      child: Row(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: SizedBox(
+                                              height: 90.0,
+                                              width: width * 0.9,
+                                              child: ListTile(
+                                                  leading: Container(
+                                                    height: 70.0,
+                                                    width: 70,
+                                                    child: CircleAvatar(
+                                                      radius: 70,
+                                                      backgroundImage: NetworkImage(
+                                                          'http://127.0.0.1:8000${user?.profile_picture}'),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                              subtitle: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 2.0, left: 7.0),
-                                                child: Text(
-                                                  "Hope you're doing well",
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle: const TextStyle(
-                                                        fontSize: 15,
+                                                  title: Text(
+                                                    " Hello Dr. ${user?.last_name}!",
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle:
+                                                          const TextStyle(
+                                                        fontSize: 27,
                                                         fontWeight:
-                                                            FontWeight.w500,
+                                                            FontWeight.w700,
                                                         color: Color.fromARGB(
-                                                            255, 107, 107, 107),
-                                                        letterSpacing: .2),
+                                                            255, 0, 0, 0),
+                                                      ),
+                                                    ),
                                                   ),
+                                                  subtitle: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 2.0,
+                                                            left: 7.0),
+                                                    child: Text(
+                                                      "Hope you're doing well",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        textStyle:
+                                                            const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        107,
+                                                                        107,
+                                                                        107),
+                                                                letterSpacing:
+                                                                    .2),
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: 15.0, top: 10.0, left: 15.0),
+                                  child: Text(
+                                    "Please enter the patient information for a successfull prediction ✅",
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      Form(
+                                          key: formKey,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                buildAlignInput('First Name'),
+                                                TextFormField(
+                                                  controller:
+                                                      firstNameController,
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'first name';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  cursorColor: Colors.black,
+                                                  decoration:
+                                                      buildInputDecoration(
+                                                          'first name'),
                                                 ),
-                                              )),
+                                                const SizedBox(height: 15.0),
+                                                buildAlignInput('Last Name'),
+                                                TextFormField(
+                                                  controller:
+                                                      lastNameController,
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'last name';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  cursorColor: Colors.black,
+                                                  decoration:
+                                                      buildInputDecoration(
+                                                          'last name'),
+                                                ),
+                                                const SizedBox(height: 15.0),
+                                                buildAlignInput('Age'),
+                                                TextFormField(
+                                                  controller: ageController,
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'age';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  decoration:
+                                                      buildInputDecoration(
+                                                          'age'),
+                                                ),
+                                                const SizedBox(height: 15.0),
+                                                buildAlignInput('History'),
+                                                TextFormField(
+                                                  controller: historyController,
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'history';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  decoration:
+                                                      buildInputDecoration(
+                                                          'History'),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return CupertinoAlertDialog(
+                                                  actions: <Widget>[
+                                                    CupertinoDialogAction(
+                                                      child: Text(
+                                                          "Upload from gallery"),
+                                                      onPressed: () {
+                                                        _pickImagefromGallery();
+                                                      },
+                                                    ),
+                                                    CupertinoDialogAction(
+                                                      child: Text(
+                                                          "Upload From Camera"),
+                                                      onPressed: () {
+                                                        _pickImagefromCamera();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        child: Stack(children: [
+                                          Container(
+                                            width:
+                                                100, // Adjust the width and height as needed
+                                            height: 100,
+                                            color: Colors.grey[
+                                                300], // Change the color as needed
+                                            child: const Center(
+                                              child: Text(
+                                                'Drop Image',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          if (isImageSelected &&
+                                              imageFile != null)
+                                            Positioned.fill(
+                                                child: Image.file(
+                                              File(imageFile!.path),
+                                              fit: BoxFit.cover,
+                                            ))
+                                        ]),
+                                      ),
+                                      Material(
+                                        color: Colors.blue[400],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: BlocBuilder<PredictionBloc,
+                                            PredictionState>(
+                                          builder: (context, state) {
+                                            return state is PredictionLoading
+                                                ?  SizedBox(
+                                          width: 200.0,
+                                          height: 42.0,
+                                          child: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        )// Show progress indicator when loading
+                                                : MaterialButton(
+                                                    onPressed: () async {
+                                                      if (formKey.currentState!
+                                                          .validate()) {
+                                                        BlocProvider.of<
+                                                                    PredictionBloc>(
+                                                                context)
+                                                            .add(
+                                                          MakePredictionEvent(
+                                                            predictionData:
+                                                                Patient(
+                                                              first_name:
+                                                                  firstNameController
+                                                                      .text,
+                                                              last_name:
+                                                                  lastNameController
+                                                                      .text,
+                                                              age: int.parse(
+                                                                  ageController
+                                                                      .text),
+                                                              history:
+                                                                  historyController
+                                                                      .text,
+                                                            ),
+                                                            imageFile:
+                                                                imageFile,
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    minWidth: 200.0,
+                                                    height: 42.0,
+                                                    color: Colors.blue,
+                                                    child: Text(
+                                                      'Predict',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  );
+                                          },
                                         ),
+                                        // MaterialButton(
+                                        //   onPressed: () async {
+                                        //     if (formKey.currentState!.validate()) {
+                                        //       BlocProvider.of<PredictionBloc>(
+                                        //               context)
+                                        //           .add(
+                                        //         MakePredictionEvent(
+                                        //             predictionData: Patient(
+                                        //               first_name:
+                                        //                   firstNameController.text,
+                                        //               last_name:
+                                        //                   lastNameController.text,
+                                        //               age: int.parse(
+                                        //                   ageController.text),
+                                        //               history:
+                                        //                   historyController.text,
+                                        //             ),
+                                        //             imageFile: imageFile),
+                                        //       );
+
+                                        //     }
+                                        //   },
+                                        //   minWidth: 200.0,
+                                        //   height: 42.0,
+                                        //   color: Colors.blue,
+                                        //   child: const Text(
+                                        //     'Predict',
+                                        //     style: TextStyle(
+                                        //         color: Colors.white,
+                                        //         fontWeight: FontWeight.bold),
+                                        //   ),
+                                        // ),
                                       ),
                                     ],
                                   ),
-                                )),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 15.0, top: 10.0, left: 15.0),
-                              child: Text(
-                                "Please enter the patient information for a successfull prediction ✅",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Form(
-                                      key: formKey,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            buildAlignInput('First Name'),
-                                            TextFormField(
-                                              controller: firstNameController,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'first name';
-                                                }
-                                                return null;
-                                              },
-                                              cursorColor: Colors.black,
-                                              decoration: buildInputDecoration(
-                                                  'first name'),
-                                            ),
-                                            const SizedBox(height: 15.0),
-                                            buildAlignInput('Last Name'),
-                                            TextFormField(
-                                              controller: lastNameController,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'last name';
-                                                }
-                                                return null;
-                                              },
-                                              cursorColor: Colors.black,
-                                              decoration: buildInputDecoration(
-                                                  'last name'),
-                                            ),
-                                            const SizedBox(height: 15.0),
-                                            buildAlignInput('Age'),
-                                            TextFormField(
-                                              controller: ageController,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'age';
-                                                }
-                                                return null;
-                                              },
-                                              decoration:
-                                                  buildInputDecoration('age'),
-                                            ),
-                                            const SizedBox(height: 15.0),
-                                            buildAlignInput('History'),
-                                            TextFormField(
-                                              controller: historyController,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'history';
-                                                }
-                                                return null;
-                                              },
-                                              decoration: buildInputDecoration(
-                                                  'History'),
-                                            )
-                                          ],
-                                        ),
-                                      )),
-                                  GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return CupertinoAlertDialog(
-                                              actions: <Widget>[
-                                                CupertinoDialogAction(
-                                                  child: Text(
-                                                      "Upload from gallery"),
-                                                  onPressed: () {
-                                                    _pickImagefromGallery();
-                                                  },
-                                                ),
-                                                CupertinoDialogAction(
-                                                  child: Text(
-                                                      "Upload From Camera"),
-                                                  onPressed: () {
-                                                    _pickImagefromCamera();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    child: Stack(children: [
-                                      Container(
-                                        width:
-                                            100, // Adjust the width and height as needed
-                                        height: 100,
-                                        color: Colors.grey[
-                                            300], // Change the color as needed
-                                        child: const Center(
-                                          child: Text(
-                                            'Drop Image',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      if (isImageSelected && imageFile != null)
-                                        Positioned.fill(
-                                            child: Image.file(
-                                          File(imageFile!.path),
-                                          fit: BoxFit.cover,
-                                        ))
-                                    ]),
-                                  ),
-                                  Material(
-                                    color: Colors.blue[400],
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    child: MaterialButton(
-                                      onPressed: () async {
-                                        if (formKey.currentState!.validate()) {
-                                          BlocProvider.of<PredictionBloc>(
-                                                  context)
-                                              .add(
-                                            MakePredictionEvent(
-                                                predictionData: Patient(
-                                                  first_name:
-                                                      firstNameController.text,
-                                                  last_name:
-                                                      lastNameController.text,
-                                                  age: int.parse(
-                                                      ageController.text),
-                                                  history:
-                                                      historyController.text,
-                                                ),
-                                                imageFile: imageFile),
-                                          );
-                                    
-                                        }
-                                      },
-                                      minWidth: 200.0,
-                                      height: 42.0,
-                                      color: Colors.blue,
-                                      child: const Text(
-                                        'Predict',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : const CircularProgressIndicator(), // Show loading indicator while fetching
+                                ),
+                              ],
+                            )
+                          : const CircularProgressIndicator(),
+                    ],
+                  ), // Show loading indicator while fetching
                 ),
               )));
     });

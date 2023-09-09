@@ -1,3 +1,5 @@
+
+
 import 'package:RadianceAI/prediction/models/predict_list_model.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,8 @@ class PredictionResultPage extends StatefulWidget {
 
 class _PredictionResultPageState extends State<PredictionResultPage> {
    late Map<String, dynamic> prediction;
+  
+
   @override
   void  initState() {
     prediction = widget.prediction;
@@ -19,9 +23,25 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   }
   @override
   Widget build(BuildContext context) {
+      final Map<String, dynamic> observations = prediction['observations'];
+  
+  // Create an empty string to build the formatted output
+  String observationsText = '';
+
+  // Iterate through the map and build the formatted string
+  observations.forEach((key, value) {
+    observationsText += ' $key: $value\n';
+  });
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(child: Text(prediction['observations'].toString())),
+      appBar: AppBar(backgroundColor: Colors.white,),
+      body: Column(
+      children: [
+        Text('Observations', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600)),
+        Center(
+          child: Text(observationsText),
+        ),
+      ],
+    ),
     );
   }
 }
