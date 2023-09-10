@@ -18,7 +18,7 @@ class RadianceAI{
     return "$baseUrl/doctor/predict/activation/$predId";
 
   }
-  static String getPatientReport(int? predId){
+  static String getPatientReport(String? predId){
     return "$baseUrl/doctor/report/$predId";
 
   }

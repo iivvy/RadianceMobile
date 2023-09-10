@@ -91,6 +91,12 @@ class _PredictPageState extends State<PredictPage> {
       isPopupOpen = !isPopupOpen;
     });
   }
+void clearTextFields() {
+  firstNameController.clear();
+  lastNameController.clear();
+  ageController.clear();
+  historyController.clear();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -141,12 +147,14 @@ class _PredictPageState extends State<PredictPage> {
           body: BlocListener<PredictionBloc, PredictionState>(
               listener: (context, state) {
                 if (state is PredictionCreated) {
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => PredictionResultPage(
                                 prediction: state.predictions,
-                              )));
+                              ))
+                              ).then((value)  {clearTextFields();});
                 } else {
                   if (state is PredictionCreatedFailed) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -438,45 +446,14 @@ class _PredictPageState extends State<PredictPage> {
                                                   );
                                           },
                                         ),
-                                        // MaterialButton(
-                                        //   onPressed: () async {
-                                        //     if (formKey.currentState!.validate()) {
-                                        //       BlocProvider.of<PredictionBloc>(
-                                        //               context)
-                                        //           .add(
-                                        //         MakePredictionEvent(
-                                        //             predictionData: Patient(
-                                        //               first_name:
-                                        //                   firstNameController.text,
-                                        //               last_name:
-                                        //                   lastNameController.text,
-                                        //               age: int.parse(
-                                        //                   ageController.text),
-                                        //               history:
-                                        //                   historyController.text,
-                                        //             ),
-                                        //             imageFile: imageFile),
-                                        //       );
-
-                                        //     }
-                                        //   },
-                                        //   minWidth: 200.0,
-                                        //   height: 42.0,
-                                        //   color: Colors.blue,
-                                        //   child: const Text(
-                                        //     'Predict',
-                                        //     style: TextStyle(
-                                        //         color: Colors.white,
-                                        //         fontWeight: FontWeight.bold),
-                                        //   ),
-                                        // ),
+                                
                                       ),
                                     ],
                                   ),
                                 ),
                               ],
                             )
-                          : const CircularProgressIndicator(),
+                          : const Center(child: CircularProgressIndicator()),
                     ],
                   ), // Show loading indicator while fetching
                 ),
