@@ -14,10 +14,14 @@ class PredictionResultPage extends StatefulWidget {
 
 class _PredictionResultPageState extends State<PredictionResultPage> {
   late Map<String, dynamic> prediction;
+  late Map<String, dynamic> report ;
+  
 
   @override
   void initState() {
     prediction = widget.prediction;
+
+
     super.initState();
   }
 
@@ -25,6 +29,9 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   Widget build(BuildContext context) {
     final Map<String, dynamic> observations = prediction['observations'];
     String predId = prediction['pred_id'];
+    report ={};
+   
+    // final Map<String, dynamic> findings = report['findings'];
 
     // Create an empty string to build the formatted output
     String observationsText = '';
@@ -50,6 +57,10 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
         body: BlocListener<ReportBloc, ReportState>(
           listener: (context, state) {
             if (state is ReportCreated) {
+               setState(() {
+               report =state.reports;
+               print(report['findings']); // Update the response text
+            });
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Report created")),
               );
@@ -121,19 +132,7 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                         );
                         isImageVisible = true;
                       });
-                      // setState(() {
-                      //   isImageVisible = !isImageVisible;
-                      // });
-                      // if (isImageVisible) {
-                      //   // Load your image here using the appropriate constructor
-                      //   activationMapImage = Image.network(
-                      //     'http://127.0.0.1:8000/doctor/predict/activation/${prediction['pred_id']}', // Replace with your image URL
-                      //     width: 200, // Set the desired width
-                      //     height: 200, // Set the desired height
-                      //   );
-                      // }
-
-                      // Create a new report
+              
                     },
                     minWidth: 200.0,
                     height: 60.0,
@@ -152,14 +151,16 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                   child: activationMapImage ??
                       Container(), // Display the image or an empty container
                 ),
-                Container(
-                  height: 70.0,
-                  width: 70,
-                  child: CircleAvatar(
-                      radius: 70,
-                      backgroundImage: NetworkImage(
-                          'http://127.0.0.1:8000/api/doctor/predict/activation/$predId')),
-                )
+                 Image(
+                      // height: 300.0,
+                      // width: 300,
+                      image: NetworkImage(
+                          'http://127.0.0.1:8000/api/doctor/predict/activation/$predId'),
+            
+                      fit: BoxFit.cover),
+                 
+                    
+                
               ],
             ),
           ),
