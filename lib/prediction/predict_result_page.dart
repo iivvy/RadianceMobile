@@ -1,4 +1,5 @@
 import 'package:RadianceAI/prediction/models/predict_list_model.dart';
+import 'package:RadianceAI/prediction/widgets/report_template.dart';
 import 'package:RadianceAI/report/report_bloc/report_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +50,20 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
             size: 25,
             color: Color.fromARGB(255, 0, 0, 1),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Navigate to the notification page
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> ReportTemplate()));
+           
+              },
+              icon: const Icon(
+                Icons.notifications,
+                size: 25,
+                color: Color.fromARGB(255, 0, 0, 1),
+              ),
+            ),
+          ],
           elevation: 1,
           backgroundColor: const Color.fromARGB(255, 236, 255, 255),
           title: const Text("Your prediction result",
@@ -59,7 +74,7 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
             if (state is ReportCreated) {
                setState(() {
                report =state.reports;
-               print(report['findings']); // Update the response text
+               print("this is the page response ${report['findings']}"); // Update the response text
             });
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Report created")),
