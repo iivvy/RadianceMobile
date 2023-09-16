@@ -30,7 +30,8 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   Widget build(BuildContext context) {
     final Map<String, dynamic> observations = prediction['observations'];
     String predId = prediction['pred_id'];
-    report ={};
+    
+    // report ={};
    
     // final Map<String, dynamic> findings = report['findings'];
 
@@ -50,20 +51,20 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
             size: 25,
             color: Color.fromARGB(255, 0, 0, 1),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                // Navigate to the notification page
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> ReportTemplate()));
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {
+          //       // Navigate to the notification page
+          //       // Navigator.push(context, MaterialPageRoute(builder: (context)=> ReportTemplate(report: state.report,)));
            
-              },
-              icon: const Icon(
-                Icons.notifications,
-                size: 25,
-                color: Color.fromARGB(255, 0, 0, 1),
-              ),
-            ),
-          ],
+          //     },
+          //     icon: const Icon(
+          //       Icons.notifications,
+          //       size: 25,
+          //       color: Color.fromARGB(255, 0, 0, 1),
+          //     ),
+          //   ),
+          // ],
           elevation: 1,
           backgroundColor: const Color.fromARGB(255, 236, 255, 255),
           title: const Text("Your prediction result",
@@ -72,10 +73,11 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
         body: BlocListener<ReportBloc, ReportState>(
           listener: (context, state) {
             if (state is ReportCreated) {
-               setState(() {
-               report =state.reports;
-               print("this is the page response ${report['findings']}"); // Update the response text
-            });
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> ReportTemplate(report: state.reports)));
+            //    setState(() {
+            //    report =state.reports;
+            //    print("this is the page response ${report['findings']}"); // Update the response text
+            // });
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Report created")),
               );

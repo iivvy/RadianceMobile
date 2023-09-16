@@ -17,7 +17,7 @@ import 'Setting/bloc/setting_bloc.dart';
 import 'Setting/setting_repo.dart';
 import 'Setting/theme.dart';
 import 'commons/Welcome.dart';
-import 'login/auth_repo.dart';
+
 import 'login/bloc/auth_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
