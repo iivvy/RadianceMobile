@@ -1,7 +1,7 @@
 import 'package:RadianceAI/Patients/bloc/patient_bloc.dart';
 import 'package:RadianceAI/Patients/models/patient_list_model.dart';
 import 'package:RadianceAI/Patients/widgets/patients_card.dart';
-import 'package:RadianceAI/Setting/bloc/setting_bloc.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

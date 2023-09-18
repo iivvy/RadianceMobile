@@ -62,7 +62,6 @@ class _PredictPageState extends State<PredictPage> {
     }
   }
 
-  @override
   UserService userService = UserService();
   User? user; // User object to store the fetched user information
 

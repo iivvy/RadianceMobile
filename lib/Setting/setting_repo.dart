@@ -1,7 +1,7 @@
 import 'package:RadianceAI/main_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main_repo.dart';
+
 import 'models/saved_app_Settings.dart';
 
 class SettingService extends MainRepository{

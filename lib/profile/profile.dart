@@ -1,14 +1,14 @@
-import 'dart:math';
+
 
 import 'package:RadianceAI/login/auth_repo.dart';
-import 'package:RadianceAI/login/bloc/auth_bloc.dart';
+
 import 'package:RadianceAI/login/login.dart';
-import 'package:RadianceAI/profile/avatar_widget.dart';
+
 import 'package:RadianceAI/user/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:RadianceAI/user/user_repo.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // Import your user repository
+
 
 class ProfilePage extends StatefulWidget {
   @override

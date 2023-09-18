@@ -1,9 +1,7 @@
 import 'package:RadianceAI/Patients/bloc/patient_bloc.dart';
-import 'package:RadianceAI/Patients/models/patient_list_model.dart';
-import 'package:RadianceAI/Patients/patient_page_test.dart';
+
 import 'package:RadianceAI/prediction/predict.dart';
-import 'package:RadianceAI/prediction/test.dart';
-import 'package:RadianceAI/prediction/upload_photo_test.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +9,7 @@ import 'package:RadianceAI/Setting/bloc/setting_bloc.dart';
 import 'package:RadianceAI/profile/bloc/profile_bloc.dart';
 import 'package:RadianceAI/user/models/user_model.dart';
 import 'package:RadianceAI/Patients/Patients.dart';
-import 'package:RadianceAI/commons/Home.dart';
+
 import 'package:RadianceAI/profile/profile.dart';
 
 class Welcome extends StatefulWidget {

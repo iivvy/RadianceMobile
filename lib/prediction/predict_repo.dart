@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:RadianceAI/Patients/models/patient_list_model.dart';
 import 'package:RadianceAI/main_repo.dart';
-import 'package:RadianceAI/prediction/models/predict_list_model.dart';
+
 
 import 'package:RadianceAI/radiance_config.dart';
 
